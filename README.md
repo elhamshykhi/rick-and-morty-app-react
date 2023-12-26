@@ -12,7 +12,7 @@
 
 This is a mini project to learn fetching data from [rickAndMortyAPI](https://rickandmortyapi.com/).
 Fetch data and show them in a list, when click on one of them you can see the character details.
-You can add the character to or delete it from favorite list (localStorage).
+You can add the character to or delete it from localStorage.
 
 ### How to run project
 
@@ -36,37 +36,40 @@ You can add the character to or delete it from favorite list (localStorage).
 - How to fetch data and how to use useEffect() and error handling and use loading
 - How to use clean up function
 - How to use localStorage in react
-- how to prevent fetching data from AbortController()
+- how to abort one or more Web requests with AbortController()
+- How to create a custom hook
 
 ```js
-useEffect(() => {
-  const controller = new AbortController();
-  const signal = controller.signal;
+export default function useCharacters(url, query) {
+  const [characters, setCharacters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function fetchData() {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.get(
-        `https://rickandmortyapi.com/api/character/?name=${query}`,
-        { signal }
-      );
+  // fetch data from Api for first render and when query changes
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      setCharacters(data.results);
-    } catch (error) {
-      setCharacters([]);
-      toast.error(error.response.data.error);
-    } finally {
-      setIsLoading(false);
+    // get characters
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get(`${url}/?name=${query}`, { signal });
+
+        setCharacters(data.results);
+      } catch (error) {
+        setCharacters([]);
+        toast.error(error.response.data.error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
 
-  fetchData();
-  return () => {
-    controller.abort();
-  };
-}, [query]);
+    fetchData();
+    return () => {
+      controller.abort();
+    };
+  }, [url, query]);
 
-useEffect(() => {
-  localStorage.setItem("fav", JSON.stringify(favorites));
-}, [favorites]);
+  return { characters, isLoading };
+}
 ```

@@ -16,7 +16,7 @@ function FavModal({
             onClick={() => setIsOpenModal(false)}
           ></div>
 
-          <div className="w-full max-w-lg rounded-xl bg-gray-800 z-50 h-96 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-4">
+          <div className="w-[90%] max-w-lg rounded-xl bg-gray-800 z-50 h-96 fixed top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 p-4">
             {/* modal header */}
             <div className="flex items-center justify-between mb-8">
               <h2 className="font-semibold text-xl text-lime-400">{title}</h2>
