@@ -1,7 +1,9 @@
 import { ArrowUpCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
 import { useEffect, useState } from "react";
+
+import axios from "axios";
 import toast from "react-hot-toast";
+
 import Loader from "./Loader";
 
 function CharacterDetail({
@@ -156,9 +158,7 @@ function EpisodeList({ episodes }) {
   return (
     <div className="bg-gray-800 rounded-lg p-4 flex flex-col gap-y-1">
       <div className="flex items-center justify-between mb-4">
-        <p className="text-xl text-gray-200 capitalize">
-          list of episodes
-        </p>
+        <p className="text-xl text-gray-200 capitalize">list of episodes</p>
         <ArrowUpCircleIcon
           onClick={() => setSortBy((prev) => !prev)}
           style={!sortBy ? { transform: "rotate(180deg)" } : {}}

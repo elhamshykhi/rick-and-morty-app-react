@@ -1,10 +1,12 @@
 import "./App.css";
 
+import { Toaster } from "react-hot-toast";
+import { useState } from "react";
+
 import Navbar from "./components/Navbar";
 import CharactersList from "./components/CharactersList";
 import CharacterDetail from "./components/CharacterDetail";
-import { Toaster } from "react-hot-toast";
-import { useState } from "react";
+
 import useCharacters from "./hooks/useCharacters";
 import useLocalStorage from "./hooks/useLocalStorage";
 
@@ -53,7 +55,6 @@ function App() {
         <CharactersList
           characters={characters}
           isLoading={isLoading}
-          setIsShowDetail={setIsShowDetail}
           handleDetail={handleDetail}
           selectedId={selectedId}
           favorites={favorites}

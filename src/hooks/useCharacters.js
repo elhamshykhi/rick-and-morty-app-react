@@ -1,10 +1,27 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import toast from "react-hot-toast";
 
+const initialState = { characters: [], isLoading: false };
+
+function charactersReducer(state, { type, payload }) {
+  switch (type) {
+    case "pending":
+      return { isLoading: true };
+    case "success":
+      return { characters: payload, isLoading: false };
+    case "reject":
+      return { characters: [], isLoading: false };
+    default:
+      return state;
+  }
+}
+
 export default function useCharacters(url, query) {
-  const [characters, setCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [{ characters, isLoading }, dispatch] = useReducer(
+    charactersReducer,
+    initialState
+  );
 
   const effectRun = useRef(false);
 
@@ -15,16 +32,13 @@ export default function useCharacters(url, query) {
 
     // get characters
     async function fetchData() {
+      dispatch({ type: "pending" });
       try {
-        setIsLoading(true);
         const { data } = await axios.get(`${url}/?name=${query}`, { signal });
-
-        setCharacters(data.results);
+        dispatch({ type: "success", payload: data.results });
       } catch (error) {
-        setCharacters([]);
+        dispatch({ type: "reject" });
         toast.error(error.response.data.error);
-      } finally {
-        setIsLoading(false);
       }
     }
 
