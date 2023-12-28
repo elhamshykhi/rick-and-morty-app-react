@@ -1,7 +1,10 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 import Loader from "../components/Loader";
+import { useCharacters } from "../context/CharactersContext";
+import { useFavorites } from "../context/FavoritesContext";
 
-function Character({ id, image, name, handleDetail, selectedId, favorites }) {
+function Character({ id, image, name }) {
+  const { handleDetail, selectedId, favorites } = useFavorites();
   const isInFav = favorites.map((fav) => fav.id).includes(id);
 
   return (
@@ -12,7 +15,9 @@ function Character({ id, image, name, handleDetail, selectedId, favorites }) {
     >
       <div className="absolute top-1 left-1">
         <HeartIcon
-          className={`${isInFav ? "fill-orange-600" : ""} w-5 h-5 stroke-orange-600`}
+          className={`${
+            isInFav ? "fill-orange-600" : ""
+          } w-5 h-5 stroke-orange-600`}
         />
       </div>
       <div className="rounded-xl rounded-tl-[60px] relative group m-1 overflow-hidden">
@@ -26,28 +31,16 @@ function Character({ id, image, name, handleDetail, selectedId, favorites }) {
   );
 }
 
-function CharactersList({
-  characters,
-  isLoading,
-  handleDetail,
-  selectedId,
-  favorites,
-}) {
+function CharactersList() {
+  const { characters, isLoading } = useCharacters();
+
   return (
     <div className="col-span-12 sm:col-span-5 md:col-span-6 min-h-screen pb-6">
       <div className="grid grid-cols-12 gap-2 lg:gap-3">
         {isLoading ? (
           <Loader />
         ) : (
-          characters.map((item) => (
-            <Character
-              key={item.id}
-              {...item}
-              handleDetail={handleDetail}
-              selectedId={selectedId}
-              favorites={favorites}
-            />
-          ))
+          characters.map((item) => <Character key={item.id} {...item} />)
         )}
       </div>
     </div>

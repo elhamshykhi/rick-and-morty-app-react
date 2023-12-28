@@ -38,6 +38,7 @@ You can add the character to or delete it from localStorage.
 - How to use localStorage in react
 - how to abort one or more Web requests with AbortController()
 - How to create a custom hook
+- How to create a context
 - How to use useReducer for fetching data
 
 ```js

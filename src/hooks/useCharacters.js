@@ -17,7 +17,7 @@ function charactersReducer(state, { type, payload }) {
   }
 }
 
-export default function useCharacters(url, query) {
+export default function useFetchCharacters(url, query) {
   const [{ characters, isLoading }, dispatch] = useReducer(
     charactersReducer,
     initialState

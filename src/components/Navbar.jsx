@@ -2,9 +2,13 @@ import FavModal from "./FavModal";
 
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useCharacters } from "../context/CharactersContext";
+import { useFavorites } from "../context/FavoritesContext";
 
-function Navbar({ query, setQuery, favorites, handleDeleteFavorite }) {
+function Navbar() {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { query, setQuery } = useCharacters();
+  const { favorites } = useFavorites();
 
   return (
     <div className="bg-gray-900 px-4 py-6 sm:px-5 md:px-6 border-b z-10 sticky top-0 border-gray-800">
@@ -23,8 +27,6 @@ function Navbar({ query, setQuery, favorites, handleDeleteFavorite }) {
           title="Favorite Characters"
           setIsOpenModal={setIsOpenModal}
           isOpenModal={isOpenModal}
-          favorites={favorites}
-          handleDeleteFavorite={handleDeleteFavorite}
         />
         <button
           onClick={() => setIsOpenModal(!isOpenModal)}

@@ -1,12 +1,9 @@
 import { TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useFavorites } from "../context/FavoritesContext";
 
-function FavModal({
-  title,
-  setIsOpenModal,
-  isOpenModal,
-  favorites,
-  handleDeleteFavorite,
-}) {
+function FavModal({ title, setIsOpenModal, isOpenModal }) {
+  const { favorites, handleDeleteFavorite } = useFavorites();
+
   return (
     <>
       {isOpenModal && (

@@ -5,14 +5,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import Loader from "./Loader";
+import { useFavorites } from "../context/FavoritesContext";
 
-function CharacterDetail({
-  isShowDetail,
-  setIsShowDetail,
-  selectedId,
-  handleAddFavorites,
-  addedToFavorites,
-}) {
+function CharacterDetail() {
+  const { selectedId, isShowDetail, setIsShowDetail } = useFavorites();
+
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -74,11 +71,7 @@ function CharacterDetail({
         ) : (
           <div className="">
             <div className="shadow-lg">
-              <CharacterInfo
-                character={character}
-                handleAddFavorites={handleAddFavorites}
-                addedToFavorites={addedToFavorites}
-              />
+              <CharacterInfo character={character} />
 
               {/* list of episodes */}
               <EpisodeList episodes={episodes} />
@@ -90,7 +83,8 @@ function CharacterDetail({
   );
 }
 
-function CharacterInfo({ character, handleAddFavorites, addedToFavorites }) {
+function CharacterInfo({ character }) {
+  const { addedToFavorites, handleAddFavorites } = useFavorites();
   return (
     <div className="text-gray-200 p-4 bg-gray-800 rounded-lg overflow-hidden mb-2 lg:mb-3 lg:flex lg:items-center lg:gap-x-3 lg:px-3">
       <div className="w-full flex justify-center lg:w-1/3">
